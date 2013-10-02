@@ -1,18 +1,27 @@
-# Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH =
+TEMPLATE = app
+contains(CONFIG, release): CONFIG += release
 
-# If your application uses the Qt Mobility libraries, uncomment the following
-# lines and add the respective components to the MOBILITY variable.
-# CONFIG += mobility
-# MOBILITY +=
+QMAKE_INFO_PLIST = Info.plist
+icons.files += Icon.png
+QMAKE_BUNDLE_DATA += icons
 
-# The .cpp file which was generated for your project. Feel free to hack it.
+QT += qml quick multimedia xmlpatterns
 HEADERS += shaderfilereader.h
 SOURCES += main.cpp shaderfilereader.cpp
+RESOURCES += resources.qrc
 
-# Please do not modify the following two lines. Required for deployment.
-include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
-qtcAddDeployment()
+qml2.files = qml2
+QMAKE_BUNDLE_DATA += qml2
 
-RESOURCES += \
-    resources.qrc
+qmldir.files += $$(QTDIR)/qml
+QMAKE_BUNDLE_DATA += qmldir
+
+QTDIR = /Volumes/Code/qt-src/qt-50-ios-dev/qtbase
+LIBS += -L$$(QTDIR)/qml/QtQuick.2 -lqtquick2plugin
+LIBS += -L$$(QTDIR)/qml/QtQuick/Window.2 -lwindowplugin
+LIBS += -L$$(QTDIR)/qml/QtQuick/Particles.2 -lparticlesplugin
+LIBS += -L$$(QTDIR)/qml/QtQuick/XmlListModel -lqmlxmllistmodelplugin
+
+# work-around Q_CONSTRUCTOR_FUNCTION:
+LIBS += -Wl,-force_load,$$(QTDIR)/lib/libQt5Quick.a
+
