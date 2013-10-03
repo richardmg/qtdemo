@@ -1,5 +1,5 @@
 TEMPLATE = app
-contains(CONFIG, release): CONFIG += release
+contains(QT_CONFIG, release): CONFIG += release
 
 QMAKE_INFO_PLIST = Info.plist
 icons.files += Icon.png
@@ -13,15 +13,15 @@ RESOURCES += resources.qrc
 qml2.files = qml2
 QMAKE_BUNDLE_DATA += qml2
 
-qmldir.files += $$(QTDIR)/qml
+qmldir.files += $$[QT_INSTALL_QML]
 QMAKE_BUNDLE_DATA += qmldir
 
 QTDIR = /Volumes/Code/qt-src/qt-50-ios-dev/qtbase
-LIBS += -L$$(QTDIR)/qml/QtQuick.2 -lqtquick2plugin
-LIBS += -L$$(QTDIR)/qml/QtQuick/Window.2 -lwindowplugin
-LIBS += -L$$(QTDIR)/qml/QtQuick/Particles.2 -lparticlesplugin
-LIBS += -L$$(QTDIR)/qml/QtQuick/XmlListModel -lqmlxmllistmodelplugin
+LIBS += -L$$[QT_INSTALL_QML]/QtQuick.2 -lqtquick2plugin$$qtPlatformTargetSuffix()
+LIBS += -L$$[QT_INSTALL_QML]/QtQuick/Window.2 -lwindowplugin$$qtPlatformTargetSuffix()
+LIBS += -L$$[QT_INSTALL_QML]/QtQuick/Particles.2 -lparticlesplugin$$qtPlatformTargetSuffix()
+LIBS += -L$$[QT_INSTALL_QML]/QtQuick/XmlListModel -lqmlxmllistmodelplugin$$qtPlatformTargetSuffix()
 
 # work-around Q_CONSTRUCTOR_FUNCTION:
-LIBS += -Wl,-force_load,$$(QTDIR)/lib/libQt5Quick.a
+LIBS += -Wl,-force_load,$$[QT_INSTALL_LIBS]/libQt5Quick$$qtPlatformTargetSuffix().a
 
