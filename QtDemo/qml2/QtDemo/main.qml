@@ -121,11 +121,6 @@ Rectangle{
     onWidthChanged: calculateScales();
     onHeightChanged: calculateScales();
 
-    FontLoader {
-        id: fontLoader
-        source: "fonts/PatrickHandSC-Regular.ttf"
-    }
-
     gradient: Gradient {
         GradientStop { position: 0.0; color: "#89d4ff" }
         GradientStop { position: 1.0; color: "#f3fbff" }
